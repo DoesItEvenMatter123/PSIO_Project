@@ -6,6 +6,7 @@ Player::Player()
 	setTexture();
 	makePlayer();
 	animate();
+	position();
 }
 
 Player::~Player()
@@ -21,7 +22,7 @@ void Player::update()
 
 void Player::setTexture()
 {
-	if (!texture.loadFromFile("character.png"))
+	if (!texture.loadFromFile("adventurer-Sheet.png"))
 	{
 		std::cout << "Error" << std::endl;
 	}
@@ -50,7 +51,7 @@ void Player::movePlayer()
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		player_.move(-velocity_x,0);
+		player_.move(-velocity_x, 0);
 		Movement = 2;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -76,12 +77,13 @@ void Player::animate()
 	{
 		if (clock.getElapsedTime().asSeconds() >= 0.3)
 		{
+			Frame.top = 0;
 			Frame.left = Frame.left + 50;
 			if (Frame.left >= 150)
 			{
 				Frame.left = 0;
 			}
-			
+
 			clock.restart();
 			player_.setTextureRect(Frame);
 		}
@@ -90,18 +92,43 @@ void Player::animate()
 	{
 		if (clock.getElapsedTime().asSeconds() >= 0.1)
 		{
+			Frame.top = 37;
 			Frame.left = Frame.left + 50;
-			if (Frame.left >= 450)
+			if (Frame.left >= 350)
 			{
-				Frame.left = 150;
+				Frame.left = 50;
 			}
 
 			clock.restart();
 			player_.setTextureRect(Frame);
 		}
+		player_.setScale(4, 4);
+		player_.setOrigin(0, 0);
+	}
+	else if (Movement == 2)
+	{
+		if (clock.getElapsedTime().asSeconds() >= 0.1)
+		{
+			Frame.top = 37;
+			Frame.left = Frame.left + 50;
+			if (Frame.left >= 350)
+			{
+				Frame.left = 50;
+			}
+
+			clock.restart();
+			player_.setTextureRect(Frame);
+		}
+		player_.setScale(-4, 4);
+		player_.setOrigin(player_.getGlobalBounds().width / 4, 0);
 	}
 	else
 	{
 		clock.restart();
 	}
+}
+
+void Player::position()
+{
+	player_.setPosition(400 - (player_.getGlobalBounds().width / 2), 600 - player_.getGlobalBounds().height);
 }

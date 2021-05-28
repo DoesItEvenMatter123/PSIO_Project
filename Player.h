@@ -21,5 +21,6 @@ private:
 	void makePlayer();
 	void setTexture();
 	void startAnimation();
+	void position();
 };
 
