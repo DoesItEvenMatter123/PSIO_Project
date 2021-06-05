@@ -11,6 +11,7 @@ public:
 	void render();
 	void updatePlayer();
 	void renderPlayer();
+	void collision();
 private:
 	sf::RenderWindow window;
 	sf::Event event;

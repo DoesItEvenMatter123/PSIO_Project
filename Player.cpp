@@ -6,7 +6,8 @@ Player::Player()
 	setTexture();
 	makePlayer();
 	animate();
-	position();
+	//position();
+	setPhysics();
 }
 
 Player::~Player()
@@ -18,6 +19,7 @@ void Player::update()
 {
 	movePlayer();
 	animate();
+	physics();
 }
 
 void Player::setTexture()
@@ -46,22 +48,22 @@ void Player::movePlayer()
 	Movement = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		player_.move(velocity_x, 0);
+		move(1, 0);
 		Movement = 1;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		player_.move(-velocity_x, 0);
+		move(-1, 0);
 		Movement = 2;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		player_.move(0, -velocity_y);
+		move(0, -1);
 		Movement = 3;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		player_.move(0, velocity_y);
+		move(0, 1);
 		Movement = 4;
 	}
 }
@@ -131,4 +133,72 @@ void Player::animate()
 void Player::position()
 {
 	player_.setPosition(400 - (player_.getGlobalBounds().width / 2), 600 - player_.getGlobalBounds().height);
+}
+
+void Player::setPhysics()
+{
+	velocity_x = 2;
+	velocity_y = 2;
+	maxVelocity_x = 10;
+	minVelocity = 1;
+	maxVelocity_y = 20;
+	acceleration = 2;
+	deceleration = 0.94;
+	gravity = 4;
+}
+
+void Player::move(float direction_x, float direction_y)
+{
+	velocity_x += direction_x * acceleration;
+	if (std::abs(velocity_x) > maxVelocity_x)
+	{
+		if (direction_x > 0)
+		{
+			velocity_x = maxVelocity_x;
+		}
+		if (direction_x < 0)
+		{
+			velocity_x = -maxVelocity_x;
+		}
+	}
+	velocity_y += acceleration;
+	if (std::abs(velocity_y) > maxVelocity_y)
+	{
+		velocity_y = maxVelocity_y;
+	}
+}
+
+void Player::physics()
+{
+	velocity_y += gravity;
+	if (std::abs(velocity_x) > maxVelocity_y)
+	{
+		velocity_y = maxVelocity_y;
+	}
+	velocity_x *= deceleration;
+	velocity_y *= deceleration;
+	if (std::abs(velocity_x) < minVelocity)
+	{
+		velocity_x = 0;
+	}
+	if (std::abs(velocity_y) < minVelocity)
+	{
+		velocity_y = 0;
+	}
+	player_.move(velocity_x, velocity_y);
+}
+
+void Player::setVelocity()
+{
+	velocity_y = 0;
+}
+
+void Player::setPosition(const float x, const float y)
+{
+	player_.setPosition(x,y);
+}
+
+sf::FloatRect Player::getGlobalBounds()
+{
+	return player_.getGlobalBounds();
 }

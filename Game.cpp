@@ -41,6 +41,8 @@ void Game::update()
 		}
 	}
 	updatePlayer();
+
+	collision();
 }
 
 void Game::render()
@@ -64,4 +66,13 @@ void Game::updatePlayer()
 void Game::renderPlayer()
 {
 	newplayer->render(window);
+}
+
+void Game::collision()
+{
+	if (newplayer->getGlobalBounds().top + newplayer->getGlobalBounds().height > window.getSize().y)
+	{
+		newplayer->setVelocity();
+		newplayer->setPosition(newplayer->getGlobalBounds().left, window.getSize().y - newplayer->getGlobalBounds().height);
+	}
 }
