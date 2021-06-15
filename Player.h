@@ -15,6 +15,7 @@ public:
 	sf::FloatRect getGlobalBounds();
 	void setVelocity();
 	void setPosition(const float x, const float y);
+	void setCanJump();
 private:
 	sf::Sprite player_;
 	sf::Texture texture;
@@ -29,10 +30,13 @@ private:
 	float acceleration;
 	float deceleration;
 	float gravity;
+	float maxHeight;
+	bool canJump;
 	void makePlayer();
 	void setTexture();
 	void startAnimation();
 	void position();
 	void setPhysics();
+	void setJump();
 };
 

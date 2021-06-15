@@ -6,8 +6,10 @@ Player::Player()
 	setTexture();
 	makePlayer();
 	animate();
-	//position();
+	position();
 	setPhysics();
+	setJump();
+	canJump = true;
 }
 
 Player::~Player()
@@ -56,9 +58,11 @@ void Player::movePlayer()
 		move(-1, 0);
 		Movement = 2;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && canJump)
 	{
-		move(0, -1);
+	    canJump = false;
+		velocity_y = -sqrtf(2 * gravity * maxHeight);
+		//move(0, -1);
 		Movement = 3;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -124,6 +128,21 @@ void Player::animate()
 		player_.setScale(-4, 4);
 		player_.setOrigin(player_.getGlobalBounds().width / 4, 0);
 	}
+	else if (Movement == 3)
+	{
+		if (clock.getElapsedTime().asSeconds() >= 0.1)
+		{
+			Frame.top = 370;
+			Frame.left = 0;
+			Frame.left += 50;
+			if (Frame.left == 100)
+			{
+				Frame.left = 0;
+			}
+			clock.restart();
+			player_.setTextureRect(Frame);
+		}
+	}
 	else
 	{
 		clock.restart();
@@ -144,7 +163,7 @@ void Player::setPhysics()
 	maxVelocity_y = 20;
 	acceleration = 2;
 	deceleration = 0.94;
-	gravity = 4;
+	gravity = 0.4;
 }
 
 void Player::move(float direction_x, float direction_y)
@@ -161,10 +180,10 @@ void Player::move(float direction_x, float direction_y)
 			velocity_x = -maxVelocity_x;
 		}
 	}
-	velocity_y += acceleration;
+	//velocity_y += acceleration;
 	if (std::abs(velocity_y) > maxVelocity_y)
 	{
-		velocity_y = maxVelocity_y;
+		//velocity_y = maxVelocity_y;
 	}
 }
 
@@ -173,7 +192,7 @@ void Player::physics()
 	velocity_y += gravity;
 	if (std::abs(velocity_x) > maxVelocity_y)
 	{
-		velocity_y = maxVelocity_y;
+		//velocity_y = maxVelocity_y;
 	}
 	velocity_x *= deceleration;
 	velocity_y *= deceleration;
@@ -183,7 +202,7 @@ void Player::physics()
 	}
 	if (std::abs(velocity_y) < minVelocity)
 	{
-		velocity_y = 0;
+		//velocity_y = 0;
 	}
 	player_.move(velocity_x, velocity_y);
 }
@@ -201,4 +220,14 @@ void Player::setPosition(const float x, const float y)
 sf::FloatRect Player::getGlobalBounds()
 {
 	return player_.getGlobalBounds();
+}
+
+void Player::setJump()
+{
+	maxHeight = 500;
+}
+
+void Player::setCanJump()
+{
+	canJump = true;
 }

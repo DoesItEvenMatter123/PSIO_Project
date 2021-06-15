@@ -1,3 +1,4 @@
 ﻿  Player.cpp
-C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(146,21): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(165,21): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(166,15): warning C4305: '=': truncation from 'double' to 'float'
   PSIO_Project.vcxproj -> C:\Users\48697\source\repos\PSIO_Project\Debug\PSIO_Project.exe

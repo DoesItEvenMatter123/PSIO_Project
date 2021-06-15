@@ -74,5 +74,6 @@ void Game::collision()
 	{
 		newplayer->setVelocity();
 		newplayer->setPosition(newplayer->getGlobalBounds().left, window.getSize().y - newplayer->getGlobalBounds().height);
+		newplayer->setCanJump();
 	}
 }
