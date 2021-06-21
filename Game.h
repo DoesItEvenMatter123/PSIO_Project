@@ -1,5 +1,6 @@
 #include "Including.h"
 #include "Player.h"
+#include "Platform.h"
 #pragma once
 class Game
 {
@@ -16,6 +17,7 @@ private:
 	sf::RenderWindow window;
 	sf::Event event;
 	Player* newplayer;
+	Platform* newplatform;
 	void makewindow();
 	void makePlayer();
 };

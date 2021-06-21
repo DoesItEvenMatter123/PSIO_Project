@@ -9,7 +9,7 @@ Player::Player()
 	position();
 	setPhysics();
 	setJump();
-	canJump = true;
+	setCanJump();
 }
 
 Player::~Player()
@@ -198,7 +198,7 @@ void Player::physics()
 	velocity_y *= deceleration;
 	if (std::abs(velocity_x) < minVelocity)
 	{
-		velocity_x = 0;
+		//velocity_x = 0;
 	}
 	if (std::abs(velocity_y) < minVelocity)
 	{
@@ -207,9 +207,14 @@ void Player::physics()
 	player_.move(velocity_x, velocity_y);
 }
 
-void Player::setVelocity()
+void Player::setVelocityY()
 {
 	velocity_y = 0;
+}
+
+void Player::setVelocityX()
+{
+	velocity_x = 0;
 }
 
 void Player::setPosition(const float x, const float y)

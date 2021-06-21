@@ -13,7 +13,8 @@ public:
 	void physics();
 	void move(float direction_x, float direction_y);
 	sf::FloatRect getGlobalBounds();
-	void setVelocity();
+	void setVelocityY();
+	void setVelocityX();
 	void setPosition(const float x, const float y);
 	void setCanJump();
 private:
