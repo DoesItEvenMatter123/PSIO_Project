@@ -13,10 +13,12 @@ public:
 	void physics();
 	void move(float direction_x, float direction_y);
 	sf::FloatRect getGlobalBounds();
-	void setVelocityY();
-	void setVelocityX();
+	void setVelocityY(float a);
+	void setVelocityX(float a);
 	void setPosition(const float x, const float y);
 	void setCanJump();
+	sf::Vector2f getPosition();
+	sf::Vector2f getVelocity();
 private:
 	sf::Sprite player_;
 	sf::Texture texture;

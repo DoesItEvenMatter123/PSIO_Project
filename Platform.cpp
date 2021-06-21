@@ -24,7 +24,12 @@ void Platform::Draw(sf::RenderWindow& window)
 	window.draw(platform_);
 }
 
-void Platform::makePlatform()
+sf::Vector2f Platform::getPosition()
 {
-	
+	return platform_.getPosition();
+}
+
+sf::FloatRect Platform::getGlobalBounds()
+{
+	return platform_.getGlobalBounds();
 }

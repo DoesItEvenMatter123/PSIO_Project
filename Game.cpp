@@ -6,6 +6,7 @@ Game::Game()
 {
 	makewindow();
 	makePlayer();
+	makePlatform();
 }
 
 Game::~Game()
@@ -42,7 +43,8 @@ void Game::update()
 	}
 	updatePlayer();
 
-	collision();
+	collisionWithScreen();
+	collisionWithObjects();
 }
 
 void Game::render()
@@ -50,39 +52,72 @@ void Game::render()
 	window.clear();
 
 	renderPlayer();
+	renderPlatform();
 
 	window.display();
 }
 void Game::makePlayer()
 {
 	newplayer = new Player;
-	newplatform = new Platform(sf::Vector2f(400,50), sf::Vector2f(700,500));
 }
 
 void Game::updatePlayer()
 {
 	newplayer->update();
 	std::cout << newplayer->getGlobalBounds().left << std::endl;
+	std::cout << newplayer->getGlobalBounds().width << std::endl;
 }
 
 void Game::renderPlayer()
 {
 	newplayer->render(window);
-	newplatform->Draw(window);
 }
 
-void Game::collision()
+void Game::makePlatform()
+{
+	newplatform = new Platform(sf::Vector2f(400, 50), sf::Vector2f(700, 500));
+}
+
+void Game::renderPlatform()
+{
+	newplatform->Draw(window);
+	std::cout << newplatform->getGlobalBounds().left;
+}
+
+void Game::collisionWithScreen()
 {
 	if (newplayer->getGlobalBounds().top + newplayer->getGlobalBounds().height > window.getSize().y)
 	{
-		newplayer->setVelocityY();
+		newplayer->setVelocityY(0);
 		newplayer->setPosition(newplayer->getGlobalBounds().left, window.getSize().y - newplayer->getGlobalBounds().height);
 		newplayer->setCanJump();
 	}
-	if (newplayer->getGlobalBounds().left < 0 - newplayer->getGlobalBounds().width)
+	if (newplayer->getGlobalBounds().left < 0 - newplayer->getGlobalBounds().width / 4)
 	{
-		newplayer->setVelocityX();
-		newplayer->setPosition(newplayer->getGlobalBounds().width, newplayer->getGlobalBounds().top);
-		newplayer->setCanJump();
+		newplayer->setVelocityX(0);
+		newplayer->setPosition(0 - newplayer->getGlobalBounds().width/4, newplayer->getGlobalBounds().top);
+	}
+	if (newplayer->getGlobalBounds().left + newplayer->getGlobalBounds().width/4 > window.getSize().x - 2 *newplayer->getGlobalBounds().width / 4)
+	{
+		newplayer->setVelocityX(0);
+		newplayer->setPosition(window.getSize().x - 3 *newplayer->getGlobalBounds().width / 4, newplayer->getGlobalBounds().top);
+	}
+}
+
+void Game::collisionWithObjects()
+{
+	sf::FloatRect playerBounds = newplayer->getGlobalBounds();
+	sf::FloatRect platformBounds = newplatform->getGlobalBounds();
+	sf::FloatRect nextPosition = playerBounds;
+	nextPosition.left += newplayer->getVelocity().x;
+	nextPosition.top += newplayer->getVelocity().y;
+
+	if (platformBounds.intersects(nextPosition))
+	{
+		if (playerBounds.left + 3*playerBounds.width/4 > platformBounds.left)
+		{
+			newplayer->setVelocityX(0);
+			newplayer->setPosition(platformBounds.left -  3 *playerBounds.width/4, playerBounds.top);
+		}
 	}
 }

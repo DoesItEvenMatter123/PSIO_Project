@@ -207,14 +207,14 @@ void Player::physics()
 	player_.move(velocity_x, velocity_y);
 }
 
-void Player::setVelocityY()
+void Player::setVelocityY(float a)
 {
-	velocity_y = 0;
+	velocity_y = a;
 }
 
-void Player::setVelocityX()
+void Player::setVelocityX(float a)
 {
-	velocity_x = 0;
+	velocity_x = a;
 }
 
 void Player::setPosition(const float x, const float y)
@@ -235,4 +235,14 @@ void Player::setJump()
 void Player::setCanJump()
 {
 	canJump = true;
+}
+
+sf::Vector2f Player::getPosition()
+{
+	 return player_.getPosition();
+}
+
+sf::Vector2f Player::getVelocity()
+{
+	return sf::Vector2f(velocity_x, velocity_y);
 }

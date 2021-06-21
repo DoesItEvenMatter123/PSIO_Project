@@ -12,7 +12,9 @@ public:
 	void render();
 	void updatePlayer();
 	void renderPlayer();
-	void collision();
+	void renderPlatform();
+	void collisionWithScreen();
+	void collisionWithObjects();
 private:
 	sf::RenderWindow window;
 	sf::Event event;
@@ -20,5 +22,6 @@ private:
 	Platform* newplatform;
 	void makewindow();
 	void makePlayer();
+	void makePlatform();
 };
 
