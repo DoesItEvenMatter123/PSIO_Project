@@ -65,7 +65,8 @@ void Game::updatePlayer()
 {
 	newplayer->update();
 	std::cout << newplayer->getGlobalBounds().left << std::endl;
-	std::cout << newplayer->getGlobalBounds().width << std::endl;
+	std::cout << newplayer->getGlobalBounds().top << std::endl;
+	//std::cout << newplayer->getGlobalBounds().height << std::endl;
 }
 
 void Game::renderPlayer()
@@ -75,13 +76,22 @@ void Game::renderPlayer()
 
 void Game::makePlatform()
 {
-	newplatform = new Platform(sf::Vector2f(400, 50), sf::Vector2f(700, 500));
+	newplatform = new Platform(sf::Vector2f(400, 50), sf::Vector2f(400, 500));
+	newplatform1 = new Platform(sf::Vector2f(400, 50), sf::Vector2f(0, 300));
+	newplatform2 = new Platform(sf::Vector2f(400, 50), sf::Vector2f(400, 100));
+	newplatform3 = new Platform(sf::Vector2f(400, 50), sf::Vector2f(600, 0));
+	platforms.emplace_back(newplatform);
+	platforms.emplace_back(newplatform1);
+	platforms.emplace_back(newplatform2);
+	platforms.emplace_back(newplatform3);
 }
 
 void Game::renderPlatform()
 {
 	newplatform->Draw(window);
-	std::cout << newplatform->getGlobalBounds().left;
+	newplatform1->Draw(window);
+	newplatform2->Draw(window);
+	newplatform3->Draw(window);
 }
 
 void Game::collisionWithScreen()
@@ -106,18 +116,39 @@ void Game::collisionWithScreen()
 
 void Game::collisionWithObjects()
 {
-	sf::FloatRect playerBounds = newplayer->getGlobalBounds();
-	sf::FloatRect platformBounds = newplatform->getGlobalBounds();
-	sf::FloatRect nextPosition = playerBounds;
-	nextPosition.left += newplayer->getVelocity().x;
-	nextPosition.top += newplayer->getVelocity().y;
-
-	if (platformBounds.intersects(nextPosition))
+	for (auto& plat : platforms)
 	{
-		if (playerBounds.left + 3*playerBounds.width/4 > platformBounds.left)
+		sf::FloatRect playerBounds = newplayer->getGlobalBounds();
+		sf::FloatRect platformBounds = plat->getGlobalBounds();
+		sf::FloatRect nextPosition = playerBounds;
+		nextPosition.left += newplayer->getVelocity().x;
+		nextPosition.top += newplayer->getVelocity().y;
+
+		if (platformBounds.intersects(nextPosition))
 		{
-			newplayer->setVelocityX(0);
-			newplayer->setPosition(platformBounds.left -  3 *playerBounds.width/4, playerBounds.top);
+			if (playerBounds.top < platformBounds.top && playerBounds.top + playerBounds.height < platformBounds.top + platformBounds.height && playerBounds.left + playerBounds.width / 3 < platformBounds.left + platformBounds.width && playerBounds.left + 3 * playerBounds.width / 4 > platformBounds.left)
+			{
+				newplayer->setVelocityY(0);
+				newplayer->setPosition(playerBounds.left, platformBounds.top - playerBounds.height);
+				newplayer->setCanJump();
+			}
+			else if (playerBounds.top > platformBounds.top && playerBounds.top + playerBounds.height > platformBounds.top + platformBounds.height && playerBounds.left + playerBounds.width / 3 < platformBounds.left + platformBounds.width && playerBounds.left + 3 * playerBounds.width / 4 > platformBounds.left)
+			{
+				newplayer->setVelocityY(0);
+				newplayer->setPosition(playerBounds.left, platformBounds.top + platformBounds.height);
+				newplayer->setCanJump();
+			}
+
+			if (playerBounds.left + 3 * playerBounds.width / 4 > platformBounds.left && playerBounds.left + playerBounds.width < platformBounds.left + platformBounds.width && playerBounds.top < platformBounds.top - playerBounds.height && playerBounds.top + playerBounds.height / 2 > platformBounds.top)
+			{
+				//newplayer->setVelocityX(0);
+				//newplayer->setPosition(platformBounds.left - 3*playerBounds.width/4, playerBounds.top);
+			}
+			else if (playerBounds.left < platformBounds.left + platformBounds.width && playerBounds.left + playerBounds.width > platformBounds.left + platformBounds.width && playerBounds.top < platformBounds.top - playerBounds.height && playerBounds.top + playerBounds.height / 2 > platformBounds.top)
+			{
+				//newplayer->setVelocityX(0);
+				//newplayer->setPosition(platformBounds.left + platformBounds.width, playerBounds.top);
+			}
 		}
 	}
 }

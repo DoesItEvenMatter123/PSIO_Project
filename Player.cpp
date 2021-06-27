@@ -6,7 +6,7 @@ Player::Player()
 	setTexture();
 	makePlayer();
 	animate();
-	position();
+	//position();
 	setPhysics();
 	setJump();
 	setCanJump();
@@ -229,7 +229,7 @@ sf::FloatRect Player::getGlobalBounds()
 
 void Player::setJump()
 {
-	maxHeight = 500;
+	maxHeight = 900;
 }
 
 void Player::setCanJump()
@@ -239,7 +239,7 @@ void Player::setCanJump()
 
 sf::Vector2f Player::getPosition()
 {
-	 return player_.getPosition();
+	return player_.getPosition();
 }
 
 sf::Vector2f Player::getVelocity()

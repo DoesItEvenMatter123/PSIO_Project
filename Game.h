@@ -20,6 +20,10 @@ private:
 	sf::Event event;
 	Player* newplayer;
 	Platform* newplatform;
+	Platform* newplatform1;
+	Platform* newplatform2;
+	Platform* newplatform3;
+	std::vector<Platform*> platforms;
 	void makewindow();
 	void makePlayer();
 	void makePlatform();
