@@ -7,6 +7,8 @@ Game::Game()
 	makewindow();
 	makePlayer();
 	makePlatform();
+	makeEnemy();
+	setEnemies(newplatform3, newenemy);
 }
 
 Game::~Game()
@@ -16,7 +18,7 @@ Game::~Game()
 
 void Game::makewindow()
 {
-	window.create(sf::VideoMode(800, 600), "Icy Tower", sf::Style::Close | sf::Style::Titlebar);
+	window.create(sf::VideoMode(800, 1080), "Icy Tower", sf::Style::Close | sf::Style::Titlebar);
 }
 
 sf::RenderWindow& Game::getWindow()
@@ -42,17 +44,22 @@ void Game::update()
 		}
 	}
 	updatePlayer();
+	updatePlatform();
+	updateEnemies();
+	updateEnemiesVelocity(newplatform3, newenemy);
 
 	collisionWithScreen();
 	collisionWithObjects();
+	CollisionWithEnemies();
 }
 
 void Game::render()
 {
 	window.clear();
 
-	renderPlayer();
 	renderPlatform();
+	renderEnemy();
+	renderPlayer();
 
 	window.display();
 }
@@ -64,14 +71,14 @@ void Game::makePlayer()
 void Game::updatePlayer()
 {
 	newplayer->update();
-	std::cout << newplayer->getGlobalBounds().left << std::endl;
-	std::cout << newplayer->getGlobalBounds().top << std::endl;
+	std::cout << newplayer->getLifes() << std::endl;
 	//std::cout << newplayer->getGlobalBounds().height << std::endl;
 }
 
 void Game::renderPlayer()
 {
 	newplayer->render(window);
+	newplayer->Draw(window);
 }
 
 void Game::makePlatform()
@@ -86,12 +93,30 @@ void Game::makePlatform()
 	platforms.emplace_back(newplatform3);
 }
 
+
 void Game::renderPlatform()
 {
 	newplatform->Draw(window);
 	newplatform1->Draw(window);
 	newplatform2->Draw(window);
 	newplatform3->Draw(window);
+	
+}
+
+void Game::makeEnemy()
+{
+	
+	newenemy = new Enemy;
+	enemies.emplace_back(newenemy);
+	
+}
+
+void Game::renderEnemy()
+{
+	for (auto& o : enemies)
+	{
+		o->Draw(window);
+	}
 }
 
 void Game::collisionWithScreen()
@@ -150,5 +175,50 @@ void Game::collisionWithObjects()
 				//newplayer->setPosition(platformBounds.left + platformBounds.width, playerBounds.top);
 			}
 		}
+	}
+}
+
+void Game::CollisionWithEnemies()
+{
+	for (auto itr = enemies.begin(); itr != enemies.end();)
+	{
+		if (newplayer->getGlobalBounds().intersects((*itr)->getGlobalBounds()))
+		{
+			itr = enemies.erase(itr);
+			newplayer->loseLife();
+		}
+		else
+		{
+			++itr;
+		}
+	}
+}
+
+void Game::updatePlatform()
+{
+	for (auto& o : platforms)
+	{
+		o->move();
+	}
+}
+
+void Game::updateEnemies()
+{
+	for (auto& o : enemies)
+	{
+		o->move();
+	}
+}
+
+void Game::setEnemies(Platform *platform, Enemy *enemy)
+{
+	enemy->setPosition(platform->getGlobalBounds().left + platform->getGlobalBounds().width / 2 - enemy->getGlobalBounds().width / 2, platform->getGlobalBounds().top - enemy->getGlobalBounds().height);
+}
+
+void Game::updateEnemiesVelocity(Platform* platform, Enemy* enemy)
+{
+	if (enemy->getGlobalBounds().left + enemy->getGlobalBounds().width > platform->getGlobalBounds().left + platform->getGlobalBounds().width || enemy->getGlobalBounds().left < platform->getGlobalBounds().left)
+	{
+		enemy->setVelocity();
 	}
 }

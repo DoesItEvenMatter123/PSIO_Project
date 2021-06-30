@@ -1,2 +1,14 @@
-﻿  Game.cpp
+﻿  Player.cpp
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(172,21): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(173,15): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(260,35): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(266,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   PSIO_Project.vcxproj -> C:\Users\48697\source\repos\PSIO_Project\Debug\PSIO_Project.exe

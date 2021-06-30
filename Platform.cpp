@@ -33,3 +33,8 @@ sf::FloatRect Platform::getGlobalBounds()
 {
 	return platform_.getGlobalBounds();
 }
+
+void Platform::move()
+{
+	platform_.move(0, vy * clock.getElapsedTime().asSeconds());
+}

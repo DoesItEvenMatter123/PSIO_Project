@@ -19,11 +19,18 @@ public:
 	void setCanJump();
 	sf::Vector2f getPosition();
 	sf::Vector2f getVelocity();
+	void makeLifeBar();
+	void Draw(sf::RenderTarget& target);
+	void loseLife();
+	void updateLifeBar();
+	int getLifes();
 private:
 	sf::Sprite player_;
 	sf::Texture texture;
 	sf::IntRect Frame;
 	sf::Clock clock;
+	sf::RectangleShape LifeBar;
+	sf::Vector2f LifeBarSize;
 	int Movement;
 	float velocity_x;
 	float velocity_y;
@@ -35,6 +42,7 @@ private:
 	float gravity;
 	float maxHeight;
 	bool canJump;
+	int lifes;
 	void makePlayer();
 	void setTexture();
 	void startAnimation();

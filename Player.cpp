@@ -10,6 +10,8 @@ Player::Player()
 	setPhysics();
 	setJump();
 	setCanJump();
+	lifes = 5;
+	makeLifeBar();
 }
 
 Player::~Player()
@@ -43,6 +45,11 @@ void Player::makePlayer()
 void Player::render(sf::RenderTarget& target)
 {
 	target.draw(player_);
+}
+
+void Player::Draw(sf::RenderTarget& target)
+{
+	target.draw(LifeBar);
 }
 
 void Player::movePlayer()
@@ -245,4 +252,22 @@ sf::Vector2f Player::getPosition()
 sf::Vector2f Player::getVelocity()
 {
 	return sf::Vector2f(velocity_x, velocity_y);
+}
+
+void Player::loseLife()
+{
+	lifes -= 1;
+	LifeBar.setSize(sf::Vector2f(100 * lifes, 25));
+}
+
+void Player::makeLifeBar()
+{
+	LifeBar.setPosition(10, 10);
+	LifeBar.setSize(sf::Vector2f(100*lifes,25));
+	LifeBar.setFillColor(sf::Color::Red);
+}
+
+int Player::getLifes()
+{
+	return lifes;
 }
