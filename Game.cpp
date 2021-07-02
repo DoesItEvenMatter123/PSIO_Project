@@ -870,7 +870,7 @@ void Game::updatePotions()
 
 void Game::setEnemies(Platform *platform, Enemy *enemy)
 {
-	enemy->setPosition(platform->getGlobalBounds().left + platform->getGlobalBounds().width / 2 - enemy->getGlobalBounds().width / 2, platform->getGlobalBounds().top + 5.3*enemy->getGlobalBounds().height);
+	enemy->setPosition(platform->getGlobalBounds().left + platform->getGlobalBounds().width / 2 - enemy->getGlobalBounds().width / 2, platform->getGlobalBounds().top + 5.3*enemy->getGlobalBounds().height + 35);
 }
 
 void Game::updateEnemiesVelocity(Platform* platform, Enemy* enemy)
