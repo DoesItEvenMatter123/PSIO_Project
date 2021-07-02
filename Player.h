@@ -21,9 +21,9 @@ public:
 	sf::Vector2f getVelocity();
 	void makeLifeBar();
 	void Draw(sf::RenderTarget& target);
-	void loseLife();
-	void updateLifeBar();
+	void changeLife(int a);
 	int getLifes();
+	bool isAlive();
 private:
 	sf::Sprite player_;
 	sf::Texture texture;

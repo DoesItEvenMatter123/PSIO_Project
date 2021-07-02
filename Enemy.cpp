@@ -4,9 +4,9 @@
 Enemy::Enemy()
 {
 	setTexture();
-	vy = 0.1;
+	vy = 118;
 	enemy.setScale(3, 3);
-	vx = 0.1;
+	vx = 70;
 }
 
 Enemy::~Enemy()
@@ -32,7 +32,8 @@ void Enemy::Draw(sf::RenderWindow& window)
 
 void Enemy::move()
 {
-	enemy.move(vx* clock.getElapsedTime().asSeconds(),vy * clock.getElapsedTime().asSeconds());
+	enemy.move(vx * clock.getElapsedTime().asSeconds(),vy * clock.getElapsedTime().asSeconds());
+	clock.restart();
 }
 
 void Enemy::setPosition(float x,float y)

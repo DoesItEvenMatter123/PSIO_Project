@@ -9,6 +9,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f position)
 	platform_.setTexture(texture);
 	Frame = sf::IntRect(0, 0, size.x, size.y);
 	platform_.setTextureRect(Frame);
+	vy = 120;
 }
 
 void Platform::setTexture()
@@ -37,4 +38,5 @@ sf::FloatRect Platform::getGlobalBounds()
 void Platform::move()
 {
 	platform_.move(0, vy * clock.getElapsedTime().asSeconds());
+	clock.restart();
 }

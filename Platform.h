@@ -3,7 +3,7 @@
 class Platform
 {
 private:
-	float vy = 0.1;
+	float vy;
 	sf::Sprite platform_;
 	sf::Texture texture;
 	sf::IntRect Frame;

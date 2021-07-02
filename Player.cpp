@@ -6,7 +6,7 @@ Player::Player()
 	setTexture();
 	makePlayer();
 	animate();
-	//position();
+	position();
 	setPhysics();
 	setJump();
 	setCanJump();
@@ -69,7 +69,6 @@ void Player::movePlayer()
 	{
 	    canJump = false;
 		velocity_y = -sqrtf(2 * gravity * maxHeight);
-		//move(0, -1);
 		Movement = 3;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -165,7 +164,7 @@ void Player::setPhysics()
 {
 	velocity_x = 2;
 	velocity_y = 2;
-	maxVelocity_x = 10;
+	maxVelocity_x = 5;
 	minVelocity = 1;
 	maxVelocity_y = 20;
 	acceleration = 2;
@@ -187,30 +186,13 @@ void Player::move(float direction_x, float direction_y)
 			velocity_x = -maxVelocity_x;
 		}
 	}
-	//velocity_y += acceleration;
-	if (std::abs(velocity_y) > maxVelocity_y)
-	{
-		//velocity_y = maxVelocity_y;
-	}
 }
 
 void Player::physics()
 {
 	velocity_y += gravity;
-	if (std::abs(velocity_x) > maxVelocity_y)
-	{
-		//velocity_y = maxVelocity_y;
-	}
 	velocity_x *= deceleration;
 	velocity_y *= deceleration;
-	if (std::abs(velocity_x) < minVelocity)
-	{
-		//velocity_x = 0;
-	}
-	if (std::abs(velocity_y) < minVelocity)
-	{
-		//velocity_y = 0;
-	}
 	player_.move(velocity_x, velocity_y);
 }
 
@@ -236,7 +218,7 @@ sf::FloatRect Player::getGlobalBounds()
 
 void Player::setJump()
 {
-	maxHeight = 900;
+	maxHeight = 700;
 }
 
 void Player::setCanJump()
@@ -254,9 +236,9 @@ sf::Vector2f Player::getVelocity()
 	return sf::Vector2f(velocity_x, velocity_y);
 }
 
-void Player::loseLife()
+void Player::changeLife(int a)
 {
-	lifes -= 1;
+	lifes += a;
 	LifeBar.setSize(sf::Vector2f(100 * lifes, 25));
 }
 
@@ -270,4 +252,16 @@ void Player::makeLifeBar()
 int Player::getLifes()
 {
 	return lifes;
+}
+
+bool Player::isAlive()
+{
+	if (lifes > 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

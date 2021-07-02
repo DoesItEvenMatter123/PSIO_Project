@@ -1,12 +1,12 @@
 ﻿  Player.cpp
-C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(172,21): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(173,15): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(260,35): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(171,21): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(172,15): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(242,35): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(266,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\48697\source\repos\PSIO_Project\PSIO_Project\Player.cpp(248,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
